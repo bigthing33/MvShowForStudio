@@ -7,6 +7,7 @@ public class MyUrl extends MyConstants {
     public static final String BAIDU_SERVICE = "http://apis.baidu.com/";
     /*
      * 天狗开放阅图的服务头
+     * https://my.oschina.net/mynote/blog/598487
      */
 //    public static final String TIANGOU_SERVICE = "http://tnfs.tngou.net/image";
 //	public static final String TIANGOU_SERVICE = "http://tnfs.tngou.net/img";
@@ -32,5 +33,17 @@ public class MyUrl extends MyConstants {
      * 天狗开放阅图的图库详情
      */
     public static final String SEARCH_TIANGOU_DETAILS = TIANGOU_SERVICE + "show";
+    /*
+     * 天狗开放阅图的图片收藏接口
+     */
+    public static final String SEARCH_TIANGOU_FAVORITE = TIANGOU_SERVICE + "favorite/add";
+    /*
+     * 天狗开放阅图评论接口，需要用户认证
+     */
+    public static final String SEARCH_TIANGOU_MEMO_ADD = TIANGOU_SERVICE + "memo/add";
+    /*
+     * 天狗开放阅图 图片评论列表
+     */
+    public static final String SEARCH_TIANGOU_MEMO_COMMENT = TIANGOU_SERVICE + "memo/comment";
 
 }
