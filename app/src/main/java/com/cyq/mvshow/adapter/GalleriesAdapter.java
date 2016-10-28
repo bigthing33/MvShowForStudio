@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cyq.mvshow.R;
+import com.cyq.mvshow.mode.Gallery;
+import com.cyq.mvshow.utils.ImageUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +20,12 @@ import java.util.List;
  * Created by win7 on 2016/10/28.
  */
 
-public class MyAdapter extends RecyclerView.Adapter {
+public class GalleriesAdapter extends RecyclerView.Adapter {
     private LayoutInflater inflater;
-    public List<String> list=new ArrayList<String>();
+    public List<Gallery> list = new ArrayList<>();
 
-    public MyAdapter(Context context) {
+    public GalleriesAdapter(Context context) {
+
         inflater = LayoutInflater.from(context);
     }
 
@@ -33,8 +37,11 @@ public class MyAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.textview.setText(list.get(position));
+        viewHolder.textview.setText(list.get(position).getTitle());
+        ImageUtils.setImageByUrl(viewHolder.simpleImage, list.get(position).getImg());
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -44,11 +51,13 @@ public class MyAdapter extends RecyclerView.Adapter {
     private class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView textview;
+        private SimpleDraweeView simpleImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            textview = (TextView) itemView.findViewById(R.id.text_view);
+            textview = (TextView) itemView.findViewById(R.id.tittle_tv);
+            simpleImage = (SimpleDraweeView) itemView.findViewById(R.id.simpleImage);
         }
     }
 }

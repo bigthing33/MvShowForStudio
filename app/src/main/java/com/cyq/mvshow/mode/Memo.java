@@ -6,7 +6,7 @@ import java.security.Timestamp;
  * Created by win7 on 2016/10/27.
  */
 
-class  Memo  {
+public class  Memo  {
     //total:最新数据总数,，tngou[] 这里返回的是Array
     private long user     ;//          留言的主人
     private String otype         ;//     对象类型

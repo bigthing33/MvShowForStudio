@@ -11,12 +11,18 @@ import android.widget.TextView;
 import com.cyq.mvshow.R;
 import com.cyq.mvshow.base.BaseAbstractListener;
 import com.cyq.mvshow.server.TianGouWorker;
+import com.cyq.mvshow.utils.LogUtil;
+import com.lzy.okgo.callback.StringCallback;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 
 /**
  * Created by Administrator on 2015/7/30.
  */
 public class PageFragment extends Fragment implements View.OnClickListener {
+    public static final String TAG = PageFragment.class.getSimpleName();
 
     public static final String ARG_PAGE = "ARG_PAGE";
     private int mPage;
@@ -52,19 +58,31 @@ public class PageFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.getKinds_btn:
-                TianGouWorker.get_kinds(new BaseAbstractListener() {
+                TianGouWorker.get_kinds(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+
+                    }
                 });
                 break;
             case R.id.getLists_btn:
-                TianGouWorker.get_list(1,20,null,new BaseAbstractListener() {
+                TianGouWorker.get_list(1, 20, 1, new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        LogUtil.d(TAG, "get_list s:" + s);
+                    }
                 });
                 break;
             case R.id.getNews_btn:
-                TianGouWorker.get_news(1,20,1,new BaseAbstractListener() {
+                TianGouWorker.get_news(1, 20, 1, new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+
+                    }
                 });
                 break;
             case R.id.getDetail_btn:
-                TianGouWorker.get_details(10,new BaseAbstractListener() {
+                TianGouWorker.get_details(10, new BaseAbstractListener() {
                 });
                 break;
         }

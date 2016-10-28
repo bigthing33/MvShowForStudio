@@ -7,4 +7,6 @@ import android.support.v4.app.Fragment;
  */
 
 public class BaseFragment extends Fragment {
+    public static final String CLASSIFY ="CLASSIFY" ;
+    public static final String IMAGE_TYPE ="IMAGE_TYPE" ;
 }

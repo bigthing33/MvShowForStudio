@@ -35,4 +35,10 @@ dependencies {
 
     //上拉下拉刷新控件
     compile 'com.jcodecraeer:xrecyclerview:1.2.7'
+
+    //gson
+    compile 'com.google.code.gson:gson:2.6.2'
+
+    //图片加载
+    compile 'com.facebook.fresco:fresco:0.14.1'
 }

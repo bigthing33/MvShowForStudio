@@ -3,6 +3,17 @@ package com.cyq.mvshow.other;
 import android.os.Environment;
 
 public class MyConstants {
+
+    /**
+     * 是否是debug模式
+     */
+    public static final Boolean isDebug = false;
+    //每次加载的图片个数
+    public static final int PAGE_SIZE = 12;
+
+    /**
+     * 以前的常量
+     */
     public static final String VERSION_NAME = "VERSION_NAME";
     public static final String VERSION_CODE = "VERSION_CODE";
     /**
@@ -43,8 +54,6 @@ public class MyConstants {
     public static final String EXTRA_REMOTE_VIEWS = "extra_remoteViews";
     public static final String ExternalStorageDirectory_SEARCHIMAGE = Environment
             .getExternalStorageDirectory().getPath() + "/searchImage";
-    //每次加载的图片个数
-    public static final int PAGE_SIZE = 12;
     //最新图片的标签
     public static final String NEWS_IMAGE = "NEWS_IMAGE";
     public static final String CLASSIES_IMAGE = "CLASSIES_IMAGE";

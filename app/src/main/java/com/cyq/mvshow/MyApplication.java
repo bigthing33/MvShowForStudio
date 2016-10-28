@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import com.cyq.mvshow.server.TianGouDataLoader;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class MyApplication extends Application {
         sVobotApplication = this;
         registerLifeCycleCallback();
         initOkGo();
+        Fresco.initialize(this.getInstance());
+        TianGouDataLoader.init(this.getInstance());
 
     }
 
@@ -84,21 +87,21 @@ public class MyApplication extends Application {
                     .setWriteTimeOut(OkGo.DEFAULT_MILLISECONDS)    //全局的写入超时时间
 
                     //可以全局统一设置缓存模式,默认是不使用缓存,可以不传,具体其他模式看 github 介绍 https://github.com/jeasonlzy/
-                    .setCacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
+                    .setCacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
 
                     //可以全局统一设置缓存时间,默认永不过期,具体使用方法看 github 介绍
-                    .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE);
+                    .setCacheTime(1000*60*60*24*2);
 
-                    //如果不想让框架管理cookie,以下不需要
+            //如果不想让框架管理cookie,以下不需要
 //                .setCookieStore(new MemoryCookieStore())                //cookie使用内存缓存（app退出后，cookie消失）
 //                    .setCookieStore(new PersistentCookieStore())          //cookie持久化存储，如果cookie不过期，则一直有效
 
-                    //可以设置https的证书,以下几种方案根据需要自己设置,不需要不用设置
+            //可以设置https的证书,以下几种方案根据需要自己设置,不需要不用设置
 //                    .setCertificates()                                  //方法一：信任所有证书
 //                    .setCertificates(getAssets().open("srca.cer"))      //方法二：也可以自己设置https证书
 //                    .setCertificates(getAssets().open("aaaa.bks"), "123456", getAssets().open("srca.cer"))//方法三：传入bks证书,密码,和cer证书,支持双向加密
 
-                    //可以添加全局拦截器,不会用的千万不要传,错误写法直接导致任何回调不执行
+            //可以添加全局拦截器,不会用的千万不要传,错误写法直接导致任何回调不执行
 //                .addInterceptor(new Interceptor() {
 //                    @Override
 //                    public Response intercept(Chain chain) throws IOException {
@@ -106,7 +109,7 @@ public class MyApplication extends Application {
 //                    }
 //                })
 
-                    //这两行同上,不需要就不要传
+            //这两行同上,不需要就不要传
 //                    .addCommonHeaders(headers)                                         //设置全局公共头
 //                    .addCommonParams(params);                                          //设置全局公共参数
         } catch (Exception e) {

@@ -21,14 +21,8 @@ public class TianGouWorker extends BaseWorker {
     /**
      * 获得图片分类数据
      */
-    public static void get_kinds(BaseInterfaceListener<JSONObject, Exception> listener) {
-        getRequest(MyUrl.SEARCH_TIANGOU_CLASSIFY, new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-                LogUtil.d(TAG, TAG);
-            }
-        });
-
+    public static void get_kinds(StringCallback stringCallback) {
+        getRequest(MyUrl.SEARCH_TIANGOU_CLASSIFY, stringCallback);
     }
 
     /**
@@ -44,13 +38,8 @@ public class TianGouWorker extends BaseWorker {
      * 需要在前面添加【http://tnfs.tngou.net/image】或者【http://tnfs.tngou.net/img】
      * 前者可以再图片后面添加宽度和高度，如：http://tnfs.tngou.net/image/top/default.jpg_180x120
      */
-    public static void get_list(int page, int rows, String id, BaseInterfaceListener<JSONObject, Exception> listener) {
-        getRequest(MyUrl.SEARCH_TIANGOU_LIST + "?page=" + page + "&rows=" + rows + "&id=" + id, new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-                LogUtil.d(TAG, TAG);
-            }
-        });
+    public static void get_list(int page, int rows, int id, StringCallback stringCallback) {
+        getRequest(MyUrl.SEARCH_TIANGOU_LIST + "?page=" + page + "&rows=" + rows + "&id=" + id, stringCallback);
 
     }
 
@@ -60,13 +49,8 @@ public class TianGouWorker extends BaseWorker {
      * classify	否	int	分类ID，取得该分类下的最新数据
      * id	是	long	当前最新的图库关键词id
      */
-    public static void get_news(int rows, int classify, long id, BaseInterfaceListener<JSONObject, Exception> listener) {
-        getRequest(MyUrl.SEARCH_TIANGOU_NEWS + "?rows=" + rows + "&classify=" + classify + "&id=" + id, new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-                LogUtil.d(TAG, TAG);
-            }
-        });
+    public static void get_news(int rows, int classify, long id, StringCallback stringCallback) {
+        getRequest(MyUrl.SEARCH_TIANGOU_NEWS + "?rows=" + rows + "&classify=" + classify + "&id=" + id, stringCallback);
 
     }
 

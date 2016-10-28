@@ -9,14 +9,12 @@ public class MyUrl extends MyConstants {
      * 天狗开放阅图的服务头
      * https://my.oschina.net/mynote/blog/598487
      */
-//    public static final String TIANGOU_SERVICE = "http://tnfs.tngou.net/image";
-//	public static final String TIANGOU_SERVICE = "http://tnfs.tngou.net/img";
-	public static final String TIANGOU_SERVICE = "http://www.tngou.net/tnfs/api/";
-    /*
-	 * 百度文本搜图
-	 */
-
-    public static final String SEARCH_IMAGE = BAIDU_SERVICE + "image_search/search/search";
+    public static final String TIANGOU_IMAGE_PATH = "http://tnfs.tngou.net/image";//可以再图片后面添加宽度和高度，如：http://tnfs.tngou.net/image/top/default.jpg_180x120
+    public static final String TIANGOU_IMAGE_PATH2 = "http://tnfs.tngou.net/img";
+    /**
+     * 天狗图片加载地址，后面接具体的图片
+     */
+    public static final String TIANGOU_SERVICE = "http://www.tngou.net/tnfs/api/";
     /*
      * 天狗开放阅图的图片分类
      */
@@ -45,5 +43,14 @@ public class MyUrl extends MyConstants {
      * 天狗开放阅图 图片评论列表
      */
     public static final String SEARCH_TIANGOU_MEMO_COMMENT = TIANGOU_SERVICE + "memo/comment";
+
+
+
+
+        /*
+     * 百度文本搜图
+	 */
+
+    public static final String SEARCH_IMAGE = BAIDU_SERVICE + "image_search/search/search";
 
 }
