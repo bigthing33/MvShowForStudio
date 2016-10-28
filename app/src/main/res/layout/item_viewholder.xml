@@ -18,7 +18,7 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/simpleImage"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/DIMEN_400PX"
+        android:layout_height="@dimen/DIMEN_900PX"
         android:layout_below="@+id/tittle_tv"
         android:background="@mipmap/ic_launcher"
         fresco:actualImageScaleType="focusCrop" />

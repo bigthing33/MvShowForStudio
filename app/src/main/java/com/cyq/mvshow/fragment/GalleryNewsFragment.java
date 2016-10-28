@@ -17,6 +17,7 @@ import com.cyq.mvshow.mode.GalleryKind;
 import com.cyq.mvshow.other.MyConstants;
 import com.cyq.mvshow.server.TianGouDataLoader;
 import com.cyq.mvshow.utils.DataUtils;
+import com.cyq.mvshow.utils.UIUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 /**
@@ -49,7 +50,7 @@ public class GalleryNewsFragment extends BaseFragment {
         super.onStart();
         galleryKind = (GalleryKind) getArguments().getSerializable(CLASSIFY);
         if (galleryKind != null) {
-            loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), 1);
+            loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
         }
     }
 
@@ -79,13 +80,13 @@ public class GalleryNewsFragment extends BaseFragment {
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong4());
+                loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
 
             }
 
             @Override
             public void onLoadMore() {
-
+                loadDataMore(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
             }
         });
     }
@@ -98,8 +99,10 @@ public class GalleryNewsFragment extends BaseFragment {
             @Override
             public void success(Galleries o) {
                 super.success(o);
+                myAdapter.list.clear();
                 myAdapter.list.addAll(o.getGalleries());
                 myAdapter.notifyDataSetChanged();
+                mRecyclerView.refreshComplete();
             }
 
             @Override
@@ -109,10 +112,39 @@ public class GalleryNewsFragment extends BaseFragment {
                 centerTip_tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loadData(MyConstants.PAGE_SIZE, 1, 1);
+                        loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
                         centerTip_tv.setVisibility(View.GONE);
                     }
                 });
+                UIUtils.toastShort(getActivity(), R.string.request_fail);
+                mRecyclerView.refreshComplete();
+            }
+        });
+    }
+
+    private void loadDataMore(int rows, int classify, long id) {
+        TianGouDataLoader.getGalleriesNews(rows, classify, id, new BaseAbstractListener<Galleries, Exception>() {
+            @Override
+            public void success(Galleries o) {
+                super.success(o);
+                myAdapter.list.addAll(o.getGalleries());
+                myAdapter.notifyDataSetChanged();
+                mRecyclerView.loadMoreComplete();
+            }
+
+            @Override
+            public void fail(Exception o) {
+                super.fail(o);
+                centerTip_tv.setVisibility(View.VISIBLE);
+                centerTip_tv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
+                        centerTip_tv.setVisibility(View.GONE);
+                    }
+                });
+                UIUtils.toastShort(getActivity(), R.string.request_fail);
+                mRecyclerView.loadMoreComplete();
             }
         });
     }

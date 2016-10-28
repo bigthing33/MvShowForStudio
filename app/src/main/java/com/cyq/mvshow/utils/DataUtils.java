@@ -20,4 +20,14 @@ public class DataUtils {
         }
         return l2;
     }
+    /**
+     * 随机生成一个四位long类型的随机数
+     * @return
+     */
+    public static long getRandomLong2(){
+        Random rd=new Random();
+        long l2 = 0;
+        l2=(int)(Math.random()*100);
+        return l2;
+    }
 }
