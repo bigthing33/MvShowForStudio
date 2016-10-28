@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cyq.mvshow.R;
+import com.cyq.mvshow.activity.GalleriesActivity;
 import com.cyq.mvshow.adapter.GalleryKindsAdapter;
 import com.cyq.mvshow.base.BaseAbstractListener;
 import com.cyq.mvshow.base.BaseFragment;
@@ -16,8 +17,9 @@ import com.cyq.mvshow.callback.MyItemClickListener;
 import com.cyq.mvshow.mode.GalleryKinds;
 import com.cyq.mvshow.mode.ImageType;
 import com.cyq.mvshow.server.TianGouDataLoader;
-import com.cyq.mvshow.utils.UIUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+
+import junit.framework.Assert;
 
 /**
  * Created by win7 on 2016/10/28.
@@ -77,7 +79,7 @@ public class GalleryKindsFragment extends BaseFragment {
         myAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                UIUtils.toastShort(getActivity(),"你点击了我");
+                GalleriesActivity.actionStart(getActivity(), myAdapter.mGalleryKinds, position, mImageType);
 
             }
         });
@@ -91,8 +93,9 @@ public class GalleryKindsFragment extends BaseFragment {
             @Override
             public void success(GalleryKinds o) {
                 super.success(o);
-                myAdapter.list.clear();
-                myAdapter.list.addAll(o.getGalleryKinds());
+                Assert.assertNotNull(o);
+                myAdapter.mGalleryKinds.getGalleryKinds().clear();
+                myAdapter.mGalleryKinds = o;
                 myAdapter.notifyDataSetChanged();
             }
 

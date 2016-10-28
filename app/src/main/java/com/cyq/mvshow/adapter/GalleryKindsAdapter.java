@@ -14,6 +14,7 @@ import com.cyq.mvshow.callback.MyItemClickListener;
 import com.cyq.mvshow.callback.MyItemLongClickListener;
 import com.cyq.mvshow.mode.Galleries;
 import com.cyq.mvshow.mode.GalleryKind;
+import com.cyq.mvshow.mode.GalleryKinds;
 import com.cyq.mvshow.mode.ImageType;
 import com.cyq.mvshow.server.TianGouDataLoader;
 import com.cyq.mvshow.utils.ImageUtils;
@@ -21,16 +22,13 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import junit.framework.Assert;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by win7 on 2016/10/28.
  */
 
 public class GalleryKindsAdapter extends RecyclerView.Adapter {
     private LayoutInflater inflater;
-    public List<GalleryKind> list = new ArrayList<>();
+    public GalleryKinds mGalleryKinds = new GalleryKinds();
     private ImageType mImageType;
 
 
@@ -63,8 +61,8 @@ public class GalleryKindsAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder viewHolder = (ViewHolder) holder;
-        final GalleryKind galleryKind = list.get(position);
-        viewHolder.textview.setText(list.get(position).getDescription());
+        final GalleryKind galleryKind = mGalleryKinds.getGalleryKinds().get(position);
+        viewHolder.textview.setText(mGalleryKinds.getGalleryKinds().get(position).getDescription());
         viewHolder.simpleImage.setImageResource(R.mipmap.ic_launcher);
         TianGouDataLoader.getGalleries(1, 2, galleryKind.getId(), new BaseAbstractListener<Galleries, Exception>() {
             @Override
@@ -94,7 +92,7 @@ public class GalleryKindsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return mGalleryKinds.getGalleryKinds().size();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {

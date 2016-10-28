@@ -1,12 +1,14 @@
 package com.cyq.mvshow.mode;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by win7 on 2016/10/28.
  */
 
-public class GalleryKinds {
+public class GalleryKinds implements Serializable {
 
     /**
      * status : true
@@ -23,7 +25,7 @@ public class GalleryKinds {
      * title : 性感美女
      */
 
-    private List<GalleryKind> tngou;
+    private List<GalleryKind> tngou=new ArrayList<>();
 
     public boolean isStatus() {
         return status;
