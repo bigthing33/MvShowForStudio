@@ -55,7 +55,7 @@ public class TianGouWorker extends BaseWorker {
     }
 
     /**
-     * 最新图片,通过当前最新的ID，取得最新的图库列表。通过该方法可以做到数据的不重复。但改接口也并非一定要用！
+     * 最新图片,通过当前最新的ID，取得最新的图库列表。通过该方法可以做到数据的不重复。但该接口也并非一定要用！
      * rows	否	int	返回最新关键词的条数，默认rows=20
      * classify	否	int	分类ID，取得该分类下的最新数据
      * id	是	long	当前最新的图库关键词id
