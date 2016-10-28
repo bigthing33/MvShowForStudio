@@ -16,6 +16,7 @@ import com.cyq.mvshow.mode.Galleries;
 import com.cyq.mvshow.mode.GalleryKind;
 import com.cyq.mvshow.other.MyConstants;
 import com.cyq.mvshow.server.TianGouDataLoader;
+import com.cyq.mvshow.utils.DataUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 /**
@@ -74,6 +75,19 @@ public class GalleryNewsFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(layoutManager);
         myAdapter = new GalleriesAdapter(getActivity());
         mRecyclerView.setAdapter(myAdapter);
+        mRecyclerView.setLoadingMoreEnabled(true);
+        mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong4());
+
+            }
+
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
     }
 
     /**
