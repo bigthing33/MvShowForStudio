@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.cyq.mvshow.R;
 import com.cyq.mvshow.base.BaseAbstractListener;
+import com.cyq.mvshow.callback.MyItemClickListener;
+import com.cyq.mvshow.callback.MyItemLongClickListener;
 import com.cyq.mvshow.mode.Galleries;
 import com.cyq.mvshow.mode.GalleryKind;
 import com.cyq.mvshow.mode.ImageType;
@@ -31,22 +33,40 @@ public class GalleryKindsAdapter extends RecyclerView.Adapter {
     public List<GalleryKind> list = new ArrayList<>();
     private ImageType mImageType;
 
+
+    private MyItemClickListener mItemClickListener;
+    private MyItemLongClickListener mItemLongClickListener;
+
     public GalleryKindsAdapter(Context context, ImageType ImageType) {
         mImageType = ImageType;
         inflater = LayoutInflater.from(context);
     }
 
+    /**
+     * 设置Item点击监听
+     *
+     * @param listener
+     */
+    public void setOnItemClickListener(MyItemClickListener listener) {
+        this.mItemClickListener = listener;
+    }
+
+    public void setOnItemLongClickListener(MyItemLongClickListener listener) {
+        this.mItemLongClickListener = listener;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(inflater.inflate(R.layout.item_viewholder, parent, false));
+        return new ViewHolder(inflater.inflate(R.layout.item_viewholder, parent, false), mItemClickListener, mItemLongClickListener);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder viewHolder = (ViewHolder) holder;
+        final GalleryKind galleryKind = list.get(position);
         viewHolder.textview.setText(list.get(position).getDescription());
         viewHolder.simpleImage.setImageResource(R.mipmap.ic_launcher);
-        TianGouDataLoader.getGalleries(1, 2, list.get(position).getId(), new BaseAbstractListener<Galleries, Exception>() {
+        TianGouDataLoader.getGalleries(1, 2, galleryKind.getId(), new BaseAbstractListener<Galleries, Exception>() {
             @Override
             public void success(Galleries galleries) {
                 super.success(galleries);
@@ -77,15 +97,38 @@ public class GalleryKindsAdapter extends RecyclerView.Adapter {
         return list.size();
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder {
+    private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private TextView textview;
         private SimpleDraweeView simpleImage;
 
-        public ViewHolder(View itemView) {
+        private MyItemClickListener mListener;
+        private MyItemLongClickListener mLongClickListener;
+
+        public ViewHolder(View itemView, MyItemClickListener listener, MyItemLongClickListener longClickListener) {
             super(itemView);
             textview = (TextView) itemView.findViewById(R.id.tittle_tv);
             simpleImage = (SimpleDraweeView) itemView.findViewById(R.id.simpleImage);
+            this.mListener = listener;
+            this.mLongClickListener = longClickListener;
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (mListener != null) {
+                mListener.onItemClick(view, getPosition());
+            }
+
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (mLongClickListener != null) {
+                mLongClickListener.onItemLongClick(view, getPosition());
+            }
+            return true;
         }
     }
 }

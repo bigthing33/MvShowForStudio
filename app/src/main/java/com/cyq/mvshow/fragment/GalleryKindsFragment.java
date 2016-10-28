@@ -12,9 +12,11 @@ import com.cyq.mvshow.R;
 import com.cyq.mvshow.adapter.GalleryKindsAdapter;
 import com.cyq.mvshow.base.BaseAbstractListener;
 import com.cyq.mvshow.base.BaseFragment;
+import com.cyq.mvshow.callback.MyItemClickListener;
 import com.cyq.mvshow.mode.GalleryKinds;
 import com.cyq.mvshow.mode.ImageType;
 import com.cyq.mvshow.server.TianGouDataLoader;
+import com.cyq.mvshow.utils.UIUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 /**
@@ -72,6 +74,13 @@ public class GalleryKindsFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(layoutManager);
         myAdapter = new GalleryKindsAdapter(getActivity(), mImageType);
         mRecyclerView.setAdapter(myAdapter);
+        myAdapter.setOnItemClickListener(new MyItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                UIUtils.toastShort(getActivity(),"你点击了我");
+
+            }
+        });
     }
 
     /**
