@@ -24,7 +24,6 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 public class GalleryNewsFragment extends BaseFragment {
 
-    private static final String CLASSIFY_ID ="CLASSIFY_ID" ;
     private XRecyclerView mRecyclerView;
     private TextView centerTip_tv;
     private GalleriesAdapter myAdapter;
@@ -47,25 +46,16 @@ public class GalleryNewsFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        galleryKind= (GalleryKind) getArguments().getSerializable(CLASSIFY);
-        if (galleryKind!=null){
+        galleryKind = (GalleryKind) getArguments().getSerializable(CLASSIFY);
+        if (galleryKind != null) {
             loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), 1);
-        }else{
-            int id= getArguments().getInt(CLASSIFY_ID);
-            loadData(MyConstants.PAGE_SIZE, id, 1);
         }
     }
-    public static GalleryNewsFragment getInstance(GalleryKind galleryKind){
-        GalleryNewsFragment galleryNewsFragment=new GalleryNewsFragment();
-        Bundle bundle=new Bundle();
-        bundle.putSerializable(CLASSIFY,galleryKind);
-        galleryNewsFragment.setArguments(bundle);
-        return galleryNewsFragment;
-    }
-    public static GalleryNewsFragment getInstance(int id){
-        GalleryNewsFragment galleryNewsFragment=new GalleryNewsFragment();
-        Bundle bundle=new Bundle();
-        bundle.putSerializable(CLASSIFY_ID,id);
+
+    public static GalleryNewsFragment getInstance(GalleryKind galleryKind) {
+        GalleryNewsFragment galleryNewsFragment = new GalleryNewsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(CLASSIFY, galleryKind);
         galleryNewsFragment.setArguments(bundle);
         return galleryNewsFragment;
     }

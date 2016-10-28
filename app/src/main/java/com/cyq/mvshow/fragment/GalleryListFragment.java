@@ -9,11 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cyq.mvshow.R;
-import com.cyq.mvshow.adapter.GalleryKindsAdapter;
+import com.cyq.mvshow.adapter.GalleriesAdapter;
 import com.cyq.mvshow.base.BaseAbstractListener;
 import com.cyq.mvshow.base.BaseFragment;
-import com.cyq.mvshow.mode.GalleryKinds;
-import com.cyq.mvshow.mode.ImageType;
+import com.cyq.mvshow.mode.Galleries;
+import com.cyq.mvshow.mode.GalleryKind;
+import com.cyq.mvshow.other.MyConstants;
 import com.cyq.mvshow.server.TianGouDataLoader;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -21,14 +22,13 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
  * Created by win7 on 2016/10/28.
  */
 
-public class GalleryKindsFragment extends BaseFragment {
-
+public class GalleryListFragment extends BaseFragment {
 
     private XRecyclerView mRecyclerView;
     private TextView centerTip_tv;
-    private GalleryKindsAdapter myAdapter;
-    private ImageType mImageType = ImageType.NEWS_TYPE;//默认是最新的类型
+    private GalleriesAdapter myAdapter;
 
+    private GalleryKind galleryKind;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,6 @@ public class GalleryKindsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gallery_kinds, null);
-        mImageType = (ImageType) getArguments().getSerializable(IMAGE_TYPE);
         initView(rootView);
         return rootView;
     }
@@ -47,15 +46,18 @@ public class GalleryKindsFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        loadData();
+        galleryKind = (GalleryKind) getArguments().getSerializable(CLASSIFY);
+        if (galleryKind != null) {
+            loadData(1, MyConstants.PAGE_SIZE, galleryKind.getId());
+        }
     }
 
-    public static GalleryKindsFragment getInstance(ImageType imageType) {
-        GalleryKindsFragment galleryKindsFragment = new GalleryKindsFragment();
+    public static GalleryListFragment getInstance(GalleryKind galleryKind) {
+        GalleryListFragment galleryNewsFragment = new GalleryListFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(IMAGE_TYPE, imageType);
-        galleryKindsFragment.setArguments(bundle);
-        return galleryKindsFragment;
+        bundle.putSerializable(CLASSIFY, galleryKind);
+        galleryNewsFragment.setArguments(bundle);
+        return galleryNewsFragment;
     }
 
     /**
@@ -70,20 +72,19 @@ public class GalleryKindsFragment extends BaseFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
-        myAdapter = new GalleryKindsAdapter(getActivity(), mImageType);
+        myAdapter = new GalleriesAdapter(getActivity());
         mRecyclerView.setAdapter(myAdapter);
     }
 
     /**
      * 加载数据
      */
-    private void loadData() {
-        TianGouDataLoader.getGalleryKinds(new BaseAbstractListener<GalleryKinds, Exception>() {
+    private void loadData(int page, int rows, int classify) {
+        TianGouDataLoader.getGalleries(page, rows, classify, new BaseAbstractListener<Galleries, Exception>() {
             @Override
-            public void success(GalleryKinds o) {
+            public void success(Galleries o) {
                 super.success(o);
-                myAdapter.list.clear();
-                myAdapter.list.addAll(o.getGalleryKinds());
+                myAdapter.list.addAll(o.getGalleries());
                 myAdapter.notifyDataSetChanged();
             }
 
@@ -94,13 +95,11 @@ public class GalleryKindsFragment extends BaseFragment {
                 centerTip_tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loadData();
+                        loadData(1, MyConstants.PAGE_SIZE, galleryKind.getId());
                         centerTip_tv.setVisibility(View.GONE);
                     }
                 });
             }
         });
     }
-
-
 }

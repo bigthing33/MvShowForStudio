@@ -6,9 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.cyq.mvshow.fragment.GalleryKindsFragment;
-import com.cyq.mvshow.fragment.GalleryNewsFragment;
 import com.cyq.mvshow.fragment.PageFragment;
 import com.cyq.mvshow.mode.ImageType;
+
+import junit.framework.Assert;
 
 /**
  * Created by win7 on 2016/10/25.
@@ -26,6 +27,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        Assert.assertTrue(position <= 2);
         switch (position) {
             case 0:
                 return PageFragment.newInstance(position + 1);
@@ -34,7 +36,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
             case 2:
                 return GalleryKindsFragment.getInstance(ImageType.UN_NES_TYPE);
             default:
-                return GalleryNewsFragment.getInstance(position);
+                return null;
         }
 
     }

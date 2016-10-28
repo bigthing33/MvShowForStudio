@@ -45,6 +45,7 @@ public class GalleryKindsAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.textview.setText(list.get(position).getDescription());
+        viewHolder.simpleImage.setImageResource(R.mipmap.ic_launcher);
         TianGouDataLoader.getGalleries(1, 2, list.get(position).getId(), new BaseAbstractListener<Galleries, Exception>() {
             @Override
             public void success(Galleries galleries) {
@@ -83,7 +84,6 @@ public class GalleryKindsAdapter extends RecyclerView.Adapter {
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             textview = (TextView) itemView.findViewById(R.id.tittle_tv);
             simpleImage = (SimpleDraweeView) itemView.findViewById(R.id.simpleImage);
         }
