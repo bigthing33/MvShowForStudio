@@ -58,15 +58,10 @@ public class TianGouWorker extends BaseWorker {
      * 图库详情信息，通过热点热词的id，取得数据详情。
      *
      * @param id       图库的id
-     * @param listener
+     * @param stringCallback
      */
-    public static void get_details(long id, BaseInterfaceListener<JSONObject, Exception> listener) {
-        getRequest(MyUrl.SEARCH_TIANGOU_DETAILS + "?id=" + id, new StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-                LogUtil.d(TAG, TAG);
-            }
-        });
+    public static void get_details(long id, StringCallback stringCallback) {
+        getRequest(MyUrl.SEARCH_TIANGOU_DETAILS + "?id=" + id, stringCallback);
 
     }
 

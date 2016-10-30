@@ -10,12 +10,13 @@ import android.widget.TextView;
 
 import com.cyq.mvshow.R;
 import com.cyq.mvshow.activity.PicturesActivity;
-import com.cyq.mvshow.adapter.GalleriesAdapter;
+import com.cyq.mvshow.adapter.PicturesAdapter;
 import com.cyq.mvshow.base.BaseAbstractListener;
 import com.cyq.mvshow.base.BaseFragment;
 import com.cyq.mvshow.callback.MyItemClickListener;
 import com.cyq.mvshow.mode.Galleries;
-import com.cyq.mvshow.mode.GalleryKind;
+import com.cyq.mvshow.mode.Gallery;
+import com.cyq.mvshow.mode.GalleryDetails;
 import com.cyq.mvshow.other.MyConstants;
 import com.cyq.mvshow.server.TianGouDataLoader;
 import com.cyq.mvshow.utils.DataUtils;
@@ -26,13 +27,15 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
  * Created by win7 on 2016/10/28.
  */
 
-public class GalleryNewsFragment extends BaseFragment {
+public class PicturesFragment extends BaseFragment {
 
+    private static final String GALLERY = "GALLERY";
     private XRecyclerView mRecyclerView;
     private TextView centerTip_tv;
-    private GalleriesAdapter myAdapter;
+    private PicturesAdapter myAdapter;
 
-    private GalleryKind galleryKind;
+    private Gallery gallery;
+    private long mPage = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,24 +45,25 @@ public class GalleryNewsFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_gallery_kinds, null);
+        View rootView = inflater.inflate(R.layout.fragment_pictures, null);
         initView(rootView);
+
         return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        galleryKind = (GalleryKind) getArguments().getSerializable(CLASSIFY);
-        if (galleryKind != null) {
-            loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
+        gallery = (Gallery) getArguments().getSerializable(GALLERY);
+        if (gallery != null) {
+            loadData(gallery.getId());
         }
     }
 
-    public static GalleryNewsFragment getInstance(GalleryKind galleryKind) {
-        GalleryNewsFragment galleryNewsFragment = new GalleryNewsFragment();
+    public static PicturesFragment getInstance(Gallery gallery) {
+        PicturesFragment galleryNewsFragment = new PicturesFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(CLASSIFY, galleryKind);
+        bundle.putSerializable(GALLERY, gallery);
         galleryNewsFragment.setArguments(bundle);
         return galleryNewsFragment;
     }
@@ -70,31 +74,30 @@ public class GalleryNewsFragment extends BaseFragment {
      * @param rootView
      */
     private void initView(View rootView) {
-        mRecyclerView = (XRecyclerView) rootView.findViewById(R.id.recyclerview);
+        mRecyclerView = (XRecyclerView) rootView.findViewById(R.id.recyclerView);
         centerTip_tv = (TextView) rootView.findViewById(R.id.centerTip_tv);
         centerTip_tv.setVisibility(View.GONE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
-        myAdapter = new GalleriesAdapter(getActivity());
+        myAdapter = new PicturesAdapter(getActivity());
         myAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                PicturesActivity.actionStart(getActivity(),myAdapter.galleries,position);
             }
         });
         mRecyclerView.setAdapter(myAdapter);
-        mRecyclerView.setLoadingMoreEnabled(true);
+        mRecyclerView.setLoadingMoreEnabled(false);// TODO: 2016/10/29 上拉加载更多的功能
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
+                loadData(gallery.getId());
 
             }
 
             @Override
             public void onLoadMore() {
-                loadDataMore(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
+                loadDataMore(gallery.getId() + mPage);
             }
         });
     }
@@ -102,13 +105,15 @@ public class GalleryNewsFragment extends BaseFragment {
     /**
      * 加载数据
      */
-    private void loadData(int rows, int classify, long id) {
-        TianGouDataLoader.getGalleriesNews(rows, classify, id, new BaseAbstractListener<Galleries, Exception>() {
+    private void loadData(final long id) {
+        mPage = 1;
+        TianGouDataLoader.getGalleryDetails(id, new BaseAbstractListener<GalleryDetails, Exception>() {
             @Override
-            public void success(Galleries o) {
+            public void success(GalleryDetails o) {
                 super.success(o);
-                myAdapter.galleries.getGalleries().clear();
-                myAdapter.galleries.getGalleries().addAll(o.getGalleries());
+                mPage++;
+                myAdapter.galleryDetails.getPictures().clear();
+                myAdapter.galleryDetails = o;
                 myAdapter.notifyDataSetChanged();
                 mRecyclerView.refreshComplete();
             }
@@ -120,7 +125,7 @@ public class GalleryNewsFragment extends BaseFragment {
                 centerTip_tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
+                        loadData(id);
                         centerTip_tv.setVisibility(View.GONE);
                     }
                 });
@@ -130,12 +135,14 @@ public class GalleryNewsFragment extends BaseFragment {
         });
     }
 
-    private void loadDataMore(int rows, int classify, long id) {
-        TianGouDataLoader.getGalleriesNews(rows, classify, id, new BaseAbstractListener<Galleries, Exception>() {
+    private void loadDataMore(final long page) {
+
+        TianGouDataLoader.getGalleryDetails(gallery.getId() + page, new BaseAbstractListener<GalleryDetails, Exception>() {
             @Override
-            public void success(Galleries o) {
+            public void success(GalleryDetails o) {
                 super.success(o);
-                myAdapter.galleries.getGalleries().addAll(o.getGalleries());
+                mPage++;
+                myAdapter.galleryDetails.getPictures().addAll(o.getPictures());
                 myAdapter.notifyDataSetChanged();
                 mRecyclerView.loadMoreComplete();
             }
@@ -147,7 +154,7 @@ public class GalleryNewsFragment extends BaseFragment {
                 centerTip_tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
+                        loadDataMore(page);
                         centerTip_tv.setVisibility(View.GONE);
                     }
                 });

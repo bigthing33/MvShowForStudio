@@ -9,34 +9,26 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cyq.mvshow.R;
-import com.cyq.mvshow.base.BaseAbstractListener;
 import com.cyq.mvshow.callback.MyItemClickListener;
 import com.cyq.mvshow.callback.MyItemLongClickListener;
 import com.cyq.mvshow.mode.Galleries;
-import com.cyq.mvshow.mode.GalleryKind;
-import com.cyq.mvshow.mode.GalleryKinds;
-import com.cyq.mvshow.mode.ImageType;
-import com.cyq.mvshow.server.TianGouDataLoader;
+import com.cyq.mvshow.mode.GalleryDetails;
 import com.cyq.mvshow.utils.ImageUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-
-import junit.framework.Assert;
 
 /**
  * Created by win7 on 2016/10/28.
  */
 
-public class GalleryKindsAdapter extends RecyclerView.Adapter {
+public class PicturesAdapter extends RecyclerView.Adapter {
     private LayoutInflater inflater;
-    public GalleryKinds mGalleryKinds = new GalleryKinds();
-    private ImageType mImageType;
-
+    public GalleryDetails galleryDetails=new GalleryDetails();
 
     private MyItemClickListener mItemClickListener;
     private MyItemLongClickListener mItemLongClickListener;
 
-    public GalleryKindsAdapter(Context context, ImageType ImageType) {
-        mImageType = ImageType;
+    public PicturesAdapter(Context context) {
+
         inflater = LayoutInflater.from(context);
     }
 
@@ -55,44 +47,21 @@ public class GalleryKindsAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(inflater.inflate(R.layout.item_gallery, parent, false), mItemClickListener, mItemLongClickListener);
+        return new ViewHolder(inflater.inflate(R.layout.item_viewholder, parent, false), mItemClickListener, mItemLongClickListener);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder viewHolder = (ViewHolder) holder;
-        final GalleryKind galleryKind = mGalleryKinds.getGalleryKinds().get(position);
-        viewHolder.textview.setText(mGalleryKinds.getGalleryKinds().get(position).getDescription());
-        viewHolder.simpleImage.setImageResource(R.mipmap.ic_launcher);
-        TianGouDataLoader.getGalleries(1, 2, galleryKind.getId(), new BaseAbstractListener<Galleries, Exception>() {
-            @Override
-            public void success(Galleries galleries) {
-                super.success(galleries);
-                Assert.assertNotNull(galleries);
-                Assert.assertNotNull(galleries.getGalleries());
-                Assert.assertTrue(galleries.getGalleries().size() >= 2);
-                switch (mImageType) {
-                    case NEWS_TYPE:
-                        ImageUtils.setImageByUrl(viewHolder.simpleImage, galleries.getGalleries().get(0).getImg());
-                        break;
-                    case UN_NES_TYPE:
-                        ImageUtils.setImageByUrl(viewHolder.simpleImage, galleries.getGalleries().get(1).getImg());
-
-                }
-            }
-
-            @Override
-            public void fail(Exception o) {
-                super.fail(o);
-            }
-        });
+        viewHolder.textview.setText(galleryDetails.getPictures().get(position).getId()+" ");// TODO: 2016/10/29
+        ImageUtils.setImageByUrl(viewHolder.simpleImage, galleryDetails.getPictures().get(position).getSrc());
 
     }
 
 
     @Override
     public int getItemCount() {
-        return mGalleryKinds.getGalleryKinds().size();
+        return galleryDetails.getPictures().size();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
@@ -105,6 +74,7 @@ public class GalleryKindsAdapter extends RecyclerView.Adapter {
 
         public ViewHolder(View itemView, MyItemClickListener listener, MyItemLongClickListener longClickListener) {
             super(itemView);
+
             textview = (TextView) itemView.findViewById(R.id.tittle_tv);
             simpleImage = (SimpleDraweeView) itemView.findViewById(R.id.simpleImage);
             this.mListener = listener;

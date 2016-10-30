@@ -1,10 +1,12 @@
 package com.cyq.mvshow.mode;
 
+import java.io.Serializable;
+
 /**
  * Created by win7 on 2016/10/27.
  */
 
-public class Gallery {
+public class Gallery implements Serializable {
     /**
      * count : 49
      * fcount : 0

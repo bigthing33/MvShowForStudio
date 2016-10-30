@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cyq.mvshow.R;
+import com.cyq.mvshow.activity.PicturesActivity;
 import com.cyq.mvshow.adapter.GalleriesAdapter;
 import com.cyq.mvshow.base.BaseAbstractListener;
 import com.cyq.mvshow.base.BaseFragment;
+import com.cyq.mvshow.callback.MyItemClickListener;
 import com.cyq.mvshow.mode.Galleries;
 import com.cyq.mvshow.mode.GalleryKind;
 import com.cyq.mvshow.other.MyConstants;
@@ -75,6 +77,12 @@ public class GalleryListFragment extends BaseFragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
         myAdapter = new GalleriesAdapter(getActivity());
+        myAdapter.setOnItemClickListener(new MyItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                PicturesActivity.actionStart(getActivity(),myAdapter.galleries,position);
+            }
+        });
         mRecyclerView.setAdapter(myAdapter);
         mRecyclerView.setLoadingMoreEnabled(true);
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
@@ -100,8 +108,8 @@ public class GalleryListFragment extends BaseFragment {
             public void success(Galleries o) {
                 super.success(o);
                 mPage=page+1;
-                myAdapter.list.clear();
-                myAdapter.list.addAll(o.getGalleries());
+                myAdapter.galleries.getGalleries().clear();
+                myAdapter.galleries.getGalleries().addAll(o.getGalleries());
                 myAdapter.notifyDataSetChanged();
                 mRecyclerView.refreshComplete();
 
@@ -130,7 +138,7 @@ public class GalleryListFragment extends BaseFragment {
             public void success(Galleries o) {
                 super.success(o);
                 mPage=page+1;
-                myAdapter.list.addAll(o.getGalleries());
+                myAdapter.galleries.getGalleries().addAll(o.getGalleries());
                 myAdapter.notifyDataSetChanged();
                 mRecyclerView.loadMoreComplete();
             }

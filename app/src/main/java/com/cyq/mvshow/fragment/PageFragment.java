@@ -82,7 +82,11 @@ public class PageFragment extends Fragment implements View.OnClickListener {
                 });
                 break;
             case R.id.getDetail_btn:
-                TianGouWorker.get_details(10, new BaseAbstractListener() {
+                TianGouWorker.get_details(10, new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+
+                    }
                 });
                 break;
         }

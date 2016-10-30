@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.cyq.mvshow.base.BaseInterfaceListener;
 import com.cyq.mvshow.mode.Galleries;
+import com.cyq.mvshow.mode.GalleryDetails;
 import com.cyq.mvshow.mode.GalleryKinds;
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
@@ -70,6 +71,29 @@ public class TianGouDataLoader {
                 Gson gson = new Gson();
                 Galleries galleries = gson.fromJson(s, Galleries.class);
                 listener.success(galleries);
+
+            }
+
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                super.onError(call, response, e);
+                listener.fail(e);
+            }
+        });
+    }
+
+    /**
+     * 获取图库详情
+     * @param id
+     * @param listener
+     */
+    public static void getGalleryDetails( long id, final BaseInterfaceListener<GalleryDetails, Exception> listener) {
+        TianGouWorker.get_details(id, new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                Gson gson = new Gson();
+                GalleryDetails galleryDetails = gson.fromJson(s, GalleryDetails.class);
+                listener.success(galleryDetails);
 
             }
 
