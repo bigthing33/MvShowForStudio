@@ -29,8 +29,12 @@ public class TianGouDataLoader {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Gson gson = new Gson();
-                GalleryKinds galleryKinds = gson.fromJson(s, GalleryKinds.class);
-                listener.success(galleryKinds);
+                try {
+                    GalleryKinds galleryKinds = gson.fromJson(s, GalleryKinds.class);
+                    listener.success(galleryKinds);
+                } catch (Exception e) {
+                    listener.fail(e);
+                }
             }
 
             @Override
@@ -49,8 +53,13 @@ public class TianGouDataLoader {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Gson gson = new Gson();
-                Galleries galleries = gson.fromJson(s, Galleries.class);
-                listener.success(galleries);
+                try {
+                    Galleries galleries = gson.fromJson(s, Galleries.class);
+                    listener.success(galleries);
+                } catch (Exception e) {
+                    listener.fail(e);
+                }
+
 
             }
 
@@ -61,16 +70,21 @@ public class TianGouDataLoader {
             }
         });
     }
+
     /**
      * 加载最新图片
      */
-    public static void getGalleriesNews( int rows, int classify,long id, final BaseInterfaceListener<Galleries, Exception> listener) {
-        TianGouWorker.get_news(rows, classify,id, new StringCallback() {
+    public static void getGalleriesNews(int rows, int classify, long id, final BaseInterfaceListener<Galleries, Exception> listener) {
+        TianGouWorker.get_news(rows, classify, id, new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Gson gson = new Gson();
-                Galleries galleries = gson.fromJson(s, Galleries.class);
-                listener.success(galleries);
+                try {
+                    Galleries galleries = gson.fromJson(s, Galleries.class);
+                    listener.success(galleries);
+                } catch (Exception e) {
+                    listener.fail(e);
+                }
 
             }
 
@@ -84,16 +98,21 @@ public class TianGouDataLoader {
 
     /**
      * 获取图库详情
+     *
      * @param id
      * @param listener
      */
-    public static void getGalleryDetails( long id, final BaseInterfaceListener<GalleryDetails, Exception> listener) {
+    public static void getGalleryDetails(long id, final BaseInterfaceListener<GalleryDetails, Exception> listener) {
         TianGouWorker.get_details(id, new StringCallback() {
             @Override
             public void onSuccess(String s, Call call, Response response) {
                 Gson gson = new Gson();
-                GalleryDetails galleryDetails = gson.fromJson(s, GalleryDetails.class);
-                listener.success(galleryDetails);
+                try {
+                    GalleryDetails galleryDetails = gson.fromJson(s, GalleryDetails.class);
+                    listener.success(galleryDetails);
+                } catch (Exception e) {
+                    listener.fail(e);
+                }
 
             }
 
