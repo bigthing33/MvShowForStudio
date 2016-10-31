@@ -2,6 +2,7 @@ package com.cyq.mvshow;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
 
 import com.cyq.mvshow.server.TianGouDataLoader;
@@ -27,9 +28,13 @@ public class MyApplication extends Application {
         sVobotApplication = this;
         registerLifeCycleCallback();
         initOkGo();
-        Fresco.initialize(this.getInstance());
+        frescoInit(this.getInstance());
         TianGouDataLoader.init(this.getInstance());
 
+    }
+
+    private void frescoInit(Context context) {
+        Fresco.initialize(context);
     }
 
     public static MyApplication getInstance() {
@@ -90,7 +95,7 @@ public class MyApplication extends Application {
                     .setCacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
 
                     //可以全局统一设置缓存时间,默认永不过期,具体使用方法看 github 介绍
-                    .setCacheTime(1000*60*60*24*2);
+                    .setCacheTime(1000 * 60 * 60 * 24 * 2);
 
             //如果不想让框架管理cookie,以下不需要
 //                .setCookieStore(new MemoryCookieStore())                //cookie使用内存缓存（app退出后，cookie消失）

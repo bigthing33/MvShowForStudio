@@ -63,7 +63,7 @@ public class GalleryKindsAdapter extends RecyclerView.Adapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
         final GalleryKind galleryKind = mGalleryKinds.getGalleryKinds().get(position);
         viewHolder.textview.setText(mGalleryKinds.getGalleryKinds().get(position).getDescription());
-        viewHolder.simpleImage.setImageResource(R.mipmap.ic_launcher);
+//        viewHolder.simpleImage.setImageResource(R.mipmap.ic_launcher);
         TianGouDataLoader.getGalleries(1, 2, galleryKind.getId(), new BaseAbstractListener<Galleries, Exception>() {
             @Override
             public void success(Galleries galleries) {

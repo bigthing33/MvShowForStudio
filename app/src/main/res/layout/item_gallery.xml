@@ -5,14 +5,22 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal">
 
-
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/simpleImage"
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_900PX"
-
-        android:background="@mipmap/ic_launcher"
-        fresco:actualImageScaleType="focusCrop" />
+        fresco:actualImageScaleType="focusCrop"
+        fresco:failureImage="@mipmap/icon_failure"
+        fresco:failureImageScaleType="centerInside"
+        fresco:placeholderImage="@mipmap/image_placeholder"
+        fresco:placeholderImageScaleType="fitCenter"
+        fresco:progressBarAutoRotateInterval="3000"
+        fresco:progressBarImage="@mipmap/image_loading"
+        fresco:progressBarImageScaleType="centerInside"
+        fresco:retryImage="@mipmap/icon_retry"
+        fresco:retryImageScaleType="centerCrop"
+        fresco:fadeDuration="3000"
+        fresco:backgroundImage="@android:color/holo_orange_light"/>
 
     <TextView
         android:id="@+id/tittle_tv"
