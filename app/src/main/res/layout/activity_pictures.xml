@@ -17,7 +17,7 @@
             android:id="@+id/sliding_collapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap" />
+            app:layout_scrollFlags="scroll|enterAlways|snap" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"

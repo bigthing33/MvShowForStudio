@@ -7,7 +7,7 @@ public class MyConstants {
     /**
      * 是否是debug模式
      */
-    public static final Boolean isDebug = false;
+    public static final Boolean isDebug = true;
     //每次加载的图片个数
     public static final int PAGE_SIZE = 12;
 
