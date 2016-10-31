@@ -12,12 +12,8 @@ import com.cyq.mvshow.R;
 import com.cyq.mvshow.callback.MyItemClickListener;
 import com.cyq.mvshow.callback.MyItemLongClickListener;
 import com.cyq.mvshow.mode.Galleries;
-import com.cyq.mvshow.mode.Gallery;
 import com.cyq.mvshow.utils.ImageUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by win7 on 2016/10/28.
@@ -50,13 +46,13 @@ public class GalleriesAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(inflater.inflate(R.layout.item_viewholder, parent, false), mItemClickListener, mItemLongClickListener);
+        return new ViewHolder(inflater.inflate(R.layout.item_gallery, parent, false), mItemClickListener, mItemLongClickListener);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.textview.setText(galleries.getGalleries().get(position).getTitle());
+        viewHolder.textview.setText(galleries.getGalleries().get(position).getTitle()+galleries.getGalleries().get(position).getSize());
         ImageUtils.setImageByUrl(viewHolder.simpleImage, galleries.getGalleries().get(position).getImg());
 
     }

@@ -17,6 +17,7 @@ import com.cyq.mvshow.callback.MyItemClickListener;
 import com.cyq.mvshow.mode.GalleryKinds;
 import com.cyq.mvshow.mode.ImageType;
 import com.cyq.mvshow.server.TianGouDataLoader;
+import com.cyq.mvshow.utils.LogUtil;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import junit.framework.Assert;
@@ -28,6 +29,7 @@ import junit.framework.Assert;
 public class GalleryKindsFragment extends BaseFragment {
 
 
+    private static final String TAG =GalleryKindsFragment.class.getSimpleName() ;
     private XRecyclerView mRecyclerView;
     private TextView centerTip_tv;
     private GalleryKindsAdapter myAdapter;
@@ -45,13 +47,15 @@ public class GalleryKindsFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_gallery_kinds, null);
         mImageType = (ImageType) getArguments().getSerializable(IMAGE_TYPE);
         initView(rootView);
+        LogUtil.d(TAG, this.getClass().getSimpleName() + "---------onCreateView---------");
+        loadData();
         return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        loadData();
+
     }
 
     public static GalleryKindsFragment getInstance(ImageType imageType) {

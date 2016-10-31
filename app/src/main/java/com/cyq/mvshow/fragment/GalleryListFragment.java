@@ -18,6 +18,7 @@ import com.cyq.mvshow.mode.Galleries;
 import com.cyq.mvshow.mode.GalleryKind;
 import com.cyq.mvshow.other.MyConstants;
 import com.cyq.mvshow.server.TianGouDataLoader;
+import com.cyq.mvshow.utils.LogUtil;
 import com.cyq.mvshow.utils.UIUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -26,34 +27,36 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
  */
 
 public class GalleryListFragment extends BaseFragment {
+    private static final String TAG = GalleryListFragment.class.getSimpleName();
 
     private XRecyclerView mRecyclerView;
     private TextView centerTip_tv;
     private GalleriesAdapter myAdapter;
 
     private GalleryKind galleryKind;
-    private int mPage=1;
+    private int mPage = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        galleryKind = (GalleryKind) getArguments().getSerializable(CLASSIFY);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        LogUtil.d(TAG, this.getClass().getSimpleName() + "---------onCreateView---------");
         View rootView = inflater.inflate(R.layout.fragment_gallery_kinds, null);
         initView(rootView);
+        if (galleryKind != null) {
+            loadData(1, MyConstants.PAGE_SIZE, galleryKind.getId());
+        }
         return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        galleryKind = (GalleryKind) getArguments().getSerializable(CLASSIFY);
-        if (galleryKind != null) {
-            loadData(1, MyConstants.PAGE_SIZE, galleryKind.getId());
-        }
     }
 
     public static GalleryListFragment getInstance(GalleryKind galleryKind) {
@@ -80,7 +83,7 @@ public class GalleryListFragment extends BaseFragment {
         myAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                PicturesActivity.actionStart(getActivity(),myAdapter.galleries,position);
+                PicturesActivity.actionStart(getActivity(), myAdapter.galleries, position);
             }
         });
         mRecyclerView.setAdapter(myAdapter);
@@ -107,7 +110,7 @@ public class GalleryListFragment extends BaseFragment {
             @Override
             public void success(Galleries o) {
                 super.success(o);
-                mPage=page+1;
+                mPage = page + 1;
                 myAdapter.galleries.getGalleries().clear();
                 myAdapter.galleries.getGalleries().addAll(o.getGalleries());
                 myAdapter.notifyDataSetChanged();
@@ -118,8 +121,8 @@ public class GalleryListFragment extends BaseFragment {
             @Override
             public void fail(Exception o) {
                 super.fail(o);
-                mPage=page;
-                UIUtils.toastShort(getActivity(),R.string.request_fail);
+                mPage = page;
+                UIUtils.toastShort(getActivity(), R.string.request_fail);
                 centerTip_tv.setVisibility(View.VISIBLE);
                 centerTip_tv.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -132,12 +135,13 @@ public class GalleryListFragment extends BaseFragment {
             }
         });
     }
+
     private void loadDataMore(final int page, int rows, int classify) {
         TianGouDataLoader.getGalleries(page, rows, classify, new BaseAbstractListener<Galleries, Exception>() {
             @Override
             public void success(Galleries o) {
                 super.success(o);
-                mPage=page+1;
+                mPage = page + 1;
                 myAdapter.galleries.getGalleries().addAll(o.getGalleries());
                 myAdapter.notifyDataSetChanged();
                 mRecyclerView.loadMoreComplete();
@@ -146,8 +150,8 @@ public class GalleryListFragment extends BaseFragment {
             @Override
             public void fail(Exception o) {
                 super.fail(o);
-                mPage=page;
-                UIUtils.toastShort(getActivity(),R.string.request_fail);
+                mPage = page;
+                UIUtils.toastShort(getActivity(), R.string.request_fail);
                 centerTip_tv.setVisibility(View.VISIBLE);
                 centerTip_tv.setOnClickListener(new View.OnClickListener() {
                     @Override

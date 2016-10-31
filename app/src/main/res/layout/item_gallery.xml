@@ -3,24 +3,25 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    >
+    android:gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/tittle_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="hello"
-        android:textColor="@color/yellow_special"
-        android:textSize="@dimen/base_textsize_normal" />
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/simpleImage"
         android:layout_width="match_parent"
         android:layout_height="@dimen/DIMEN_900PX"
-        android:layout_below="@+id/tittle_tv"
+
         android:background="@mipmap/ic_launcher"
         fresco:actualImageScaleType="focusCrop" />
+
+    <TextView
+        android:id="@+id/tittle_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/simpleImage"
+        android:layout_centerHorizontal="true"
+        android:text="hello"
+        android:textColor="@color/yellow_special"
+        android:textSize="@dimen/base_textsize_normal" />
 
 </RelativeLayout>

@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.cyq.mvshow.R;
 import com.cyq.mvshow.callback.MyItemClickListener;
 import com.cyq.mvshow.callback.MyItemLongClickListener;
-import com.cyq.mvshow.mode.Galleries;
 import com.cyq.mvshow.mode.GalleryDetails;
 import com.cyq.mvshow.utils.ImageUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -47,13 +46,13 @@ public class PicturesAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(inflater.inflate(R.layout.item_viewholder, parent, false), mItemClickListener, mItemLongClickListener);
+        return new ViewHolder(inflater.inflate(R.layout.item_gallery, parent, false), mItemClickListener, mItemLongClickListener);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder viewHolder = (ViewHolder) holder;
-        viewHolder.textview.setText(galleryDetails.getPictures().get(position).getId()+" ");// TODO: 2016/10/29
+        viewHolder.textview.setText((position+1)+" ");// TODO: 2016/10/29
         ImageUtils.setImageByUrl(viewHolder.simpleImage, galleryDetails.getPictures().get(position).getSrc());
 
     }

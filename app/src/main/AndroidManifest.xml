@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,9 +26,11 @@
         </activity>
         <activity
             android:name=".activity.GalleriesActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.PicturesActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
     </application>
 
