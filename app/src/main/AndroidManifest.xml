@@ -32,6 +32,17 @@
             android:name=".activity.PicturesActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="581714ff07fe6551ee001414"></meta-data>
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="1fd9dcd1241c7ff167d8dc1951e3af1e"></meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="fim"></meta-data>
     </application>
+
 
 </manifest>

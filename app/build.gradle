@@ -43,4 +43,6 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.14.1'
     compile 'com.facebook.fresco:drawee:0.1.0+'
     compile 'com.facebook.fresco:imagepipeline-okhttp:0.1.0+'
+
+    compile project(':PushSDK')
 }
