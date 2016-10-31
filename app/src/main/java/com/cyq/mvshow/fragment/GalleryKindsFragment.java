@@ -78,6 +78,7 @@ public class GalleryKindsFragment extends BaseFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setPullRefreshEnabled(false);
         myAdapter = new GalleryKindsAdapter(getActivity(), mImageType);
         mRecyclerView.setAdapter(myAdapter);
         myAdapter.setOnItemClickListener(new MyItemClickListener() {

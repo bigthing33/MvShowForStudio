@@ -8,7 +8,9 @@
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent" >
+
+    </com.jcodecraeer.xrecyclerview.XRecyclerView>
 
     <TextView
         android:id="@+id/centerTip_tv"

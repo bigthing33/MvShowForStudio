@@ -16,6 +16,7 @@ import com.cyq.mvshow.base.BaseFragment;
 import com.cyq.mvshow.callback.MyItemClickListener;
 import com.cyq.mvshow.mode.Galleries;
 import com.cyq.mvshow.mode.GalleryKind;
+import com.cyq.mvshow.mode.ImageType;
 import com.cyq.mvshow.other.MyConstants;
 import com.cyq.mvshow.server.TianGouDataLoader;
 import com.cyq.mvshow.utils.LogUtil;
@@ -83,7 +84,7 @@ public class GalleryListFragment extends BaseFragment {
         myAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                PicturesActivity.actionStart(getActivity(), myAdapter.galleries, position);
+                PicturesActivity.actionStart(getActivity(), galleryKind, myAdapter.galleries, mPage, position, ImageType.UN_NES_TYPE);
             }
         });
         mRecyclerView.setAdapter(myAdapter);

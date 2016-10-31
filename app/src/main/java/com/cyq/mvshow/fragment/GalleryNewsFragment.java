@@ -16,6 +16,7 @@ import com.cyq.mvshow.base.BaseFragment;
 import com.cyq.mvshow.callback.MyItemClickListener;
 import com.cyq.mvshow.mode.Galleries;
 import com.cyq.mvshow.mode.GalleryKind;
+import com.cyq.mvshow.mode.ImageType;
 import com.cyq.mvshow.other.MyConstants;
 import com.cyq.mvshow.server.TianGouDataLoader;
 import com.cyq.mvshow.utils.DataUtils;
@@ -29,7 +30,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 public class GalleryNewsFragment extends BaseFragment {
 
-    private static final String TAG =GalleryNewsFragment.class.getSimpleName() ;
+    private static final String TAG = GalleryNewsFragment.class.getSimpleName();
     private XRecyclerView mRecyclerView;
     private TextView centerTip_tv;
     private GalleriesAdapter myAdapter;
@@ -49,7 +50,7 @@ public class GalleryNewsFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_gallery_kinds, null);
         initView(rootView);
         if (galleryKind != null) {
-            loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
+            loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong3());
         }
         return rootView;
     }
@@ -83,7 +84,7 @@ public class GalleryNewsFragment extends BaseFragment {
         myAdapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                PicturesActivity.actionStart(getActivity(),myAdapter.galleries,position);
+                PicturesActivity.actionStart(getActivity(), galleryKind, myAdapter.galleries,1, position, ImageType.NEWS_TYPE);
             }
         });
         mRecyclerView.setAdapter(myAdapter);
@@ -91,13 +92,13 @@ public class GalleryNewsFragment extends BaseFragment {
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
+                loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong3());
 
             }
 
             @Override
             public void onLoadMore() {
-                loadDataMore(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
+                loadDataMore(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong3());
             }
         });
     }
@@ -123,7 +124,7 @@ public class GalleryNewsFragment extends BaseFragment {
                 centerTip_tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
+                        loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong3());
                         centerTip_tv.setVisibility(View.GONE);
                     }
                 });
@@ -150,7 +151,7 @@ public class GalleryNewsFragment extends BaseFragment {
                 centerTip_tv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong2());
+                        loadData(MyConstants.PAGE_SIZE, galleryKind.getId(), DataUtils.getRandomLong3());
                         centerTip_tv.setVisibility(View.GONE);
                     }
                 });

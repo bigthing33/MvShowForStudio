@@ -24,10 +24,10 @@ public class DataUtils {
      * 随机生成一个四位long类型的随机数
      * @return
      */
-    public static long getRandomLong2(){
+    public static long getRandomLong3(){
         Random rd=new Random();
         long l2 = 0;
-        l2=(int)(Math.random()*100);
+        l2=(int)(Math.random()*300);
         return l2;
     }
 }
