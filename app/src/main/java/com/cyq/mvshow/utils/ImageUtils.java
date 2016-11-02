@@ -14,10 +14,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 public class ImageUtils {
     public static void setImageByUrl(SimpleDraweeView simpleImage, String url) {
-        if (MyConstants.isDebug) {
-            url = "http://imgbbs.heiguang.net/forum/201510/06/104432cjc7c8tx7xxqqkgq.jpg";
-        } else {
+        if (MyConstants.isShowMVFromSkyDog) {
             url = MyUrl.TIANGOU_IMAGE_PATH + url;
+        } else {
+            url = "http://imgbbs.heiguang.net/forum/201510/06/104432cjc7c8tx7xxqqkgq.jpg";
         }
         Uri uri = Uri.parse(url);
         simpleImage.setImageURI(uri);
@@ -31,7 +31,6 @@ public class ImageUtils {
                 .setOldController(simpleImage.getController())
                 //构建
                 .build();
-
         //设置DraweeController
         simpleImage.setController(controller);
     }
