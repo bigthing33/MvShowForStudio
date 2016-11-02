@@ -9,17 +9,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cyq.mvshow.R;
-import com.cyq.mvshow.activity.PicturesActivity;
 import com.cyq.mvshow.adapter.PicturesAdapter;
 import com.cyq.mvshow.base.BaseAbstractListener;
 import com.cyq.mvshow.base.BaseFragment;
 import com.cyq.mvshow.callback.MyItemClickListener;
-import com.cyq.mvshow.mode.Galleries;
 import com.cyq.mvshow.mode.Gallery;
 import com.cyq.mvshow.mode.GalleryDetails;
-import com.cyq.mvshow.other.MyConstants;
 import com.cyq.mvshow.server.TianGouDataLoader;
-import com.cyq.mvshow.utils.DataUtils;
 import com.cyq.mvshow.utils.UIUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 

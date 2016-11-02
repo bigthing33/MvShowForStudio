@@ -12,6 +12,7 @@ import com.cyq.mvshow.R;
 import com.cyq.mvshow.base.BaseAbstractListener;
 import com.cyq.mvshow.server.TianGouWorker;
 import com.cyq.mvshow.utils.LogUtil;
+import com.cyq.mvshow.utils.UpdateUtil;
 import com.lzy.okgo.callback.StringCallback;
 
 import okhttp3.Call;
@@ -49,6 +50,7 @@ public class PageFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.getLists_btn).setOnClickListener(this);
         view.findViewById(R.id.getNews_btn).setOnClickListener(this);
         view.findViewById(R.id.getDetail_btn).setOnClickListener(this);
+        view.findViewById(R.id.getVersionInfo_btn).setOnClickListener(this);
         TextView textView = (TextView) view.findViewById(R.id.tittle_tv);
         textView.setText("Fragment #" + mPage);
         return view;
@@ -86,6 +88,14 @@ public class PageFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
 
+                    }
+                });
+                break;
+            case R.id.getVersionInfo_btn:
+                UpdateUtil.checkVersionByRequest(getActivity(),new BaseAbstractListener<Boolean, Exception>() {
+                    @Override
+                    public void success(Boolean o) {
+                        super.success(o);
                     }
                 });
                 break;

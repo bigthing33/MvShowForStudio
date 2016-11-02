@@ -5,8 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.cyq.mvshow.other.MyConstants;
 import com.cyq.mvshow.server.TianGouDataLoader;
+import com.cyq.mvshow.service.MyPushIntentService;
 import com.cyq.mvshow.utils.LogUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lzy.okgo.OkGo;
@@ -55,7 +55,9 @@ public class MyApplication extends Application {
 
             }
         });
-        if (!MyConstants.isDebug) {
+        //设置自定义接收消息
+        mPushAgent.setPushIntentServiceClass(MyPushIntentService.class);
+        if (BuildConfig.DEBUG) {
             //如果不是debug模式，则关闭日志
             mPushAgent.setDebugMode(false);
         }

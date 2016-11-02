@@ -113,7 +113,6 @@ public class TianGouDataLoader {
                 } catch (Exception e) {
                     listener.fail(e);
                 }
-
             }
 
             @Override
